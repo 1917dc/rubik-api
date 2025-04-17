@@ -1,4 +1,4 @@
-package br.com.login_base.security;
+package br.com.rubik_api.security;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;

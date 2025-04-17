@@ -1,4 +1,4 @@
-package br.com.login_base.exception;
+package br.com.rubik_api.service.exception;
 
 public class UserAlreadyExists extends RuntimeException {
 	public UserAlreadyExists() {

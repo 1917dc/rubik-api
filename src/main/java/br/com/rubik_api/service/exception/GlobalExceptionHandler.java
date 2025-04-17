@@ -1,4 +1,4 @@
-package br.com.login_base.exception;
+package br.com.rubik_api.service.exception;
 
 import java.util.Collections;
 import java.util.Map;

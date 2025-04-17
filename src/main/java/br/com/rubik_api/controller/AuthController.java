@@ -1,4 +1,4 @@
-package br.com.login_base.controller;
+package br.com.rubik_api.controller;
 
 import java.time.Instant;
 import java.util.Collections;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.login_base.dto.LoginDTO;
-import br.com.login_base.dto.RegisterDTO;
-import br.com.login_base.entity.User;
-import br.com.login_base.service.UserService;
+import br.com.rubik_api.controller.dto.LoginDTO;
+import br.com.rubik_api.controller.dto.RegisterDTO;
+import br.com.rubik_api.entity.User;
+import br.com.rubik_api.service.UserService;
 
 @RestController
 @RequestMapping("/auth")

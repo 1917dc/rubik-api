@@ -1,4 +1,4 @@
-package br.com.login_base.config;
+package br.com.rubik_api.config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +25,7 @@ import jakarta.persistence.EntityManagerFactory;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(entityManagerFactoryRef = "entityManagerFactory", basePackages = {
-		"br.com.login_base.repository" })
+		"br.com.rubik_api.repository"})
 public class DatasourceProperties {
 
 	@Autowired

@@ -1,10 +1,10 @@
-package br.com.login_base.repository;
+package br.com.rubik_api.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.login_base.entity.User;
+import br.com.rubik_api.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 	Optional<User> findByEmail(String email);

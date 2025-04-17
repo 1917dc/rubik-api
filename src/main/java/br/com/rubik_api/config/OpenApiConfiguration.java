@@ -1,4 +1,4 @@
-package br.com.login_base.config;
+package br.com.rubik_api.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
