@@ -1,13 +1,13 @@
-package com.br.rubik;
+package br.com.rubik_api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RubikApiApplicationTests {
+class LoginBaseApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+	@Test
+	void contextLoads() {
+	}
 
 }
