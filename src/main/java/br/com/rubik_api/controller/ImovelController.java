@@ -1,15 +1,18 @@
 package br.com.rubik_api.controller;
 
 import br.com.rubik_api.controller.dto.CreateImovelDTO;
+import br.com.rubik_api.entity.User;
 import br.com.rubik_api.entity.imovel.Imovel;
+import br.com.rubik_api.repository.UserRepository;
 import br.com.rubik_api.service.ImovelService;
 import br.com.rubik_api.service.UserService;
+import br.com.rubik_api.service.exception.UserNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/imovel")
@@ -22,28 +25,23 @@ public class ImovelController {
 
     @PostMapping
     public ResponseEntity createImovel(@RequestBody CreateImovelDTO createImovelDTO) {
-        try{
-            var imovel = new Imovel();
-            var user = userService.findByUsername(createImovelDTO.userEmail());
-            imovel.setUser(user);
-            imovel.setEndereco(createImovelDTO.endereco());
-            imovel.setCidade(createImovelDTO.cidade());
-            imovel.setEstado(createImovelDTO.estado());
-            imovel.setCep(createImovelDTO.cep());
-            imovel.setTipo(createImovelDTO.tipo());
-            imovel.setQtdQuartos(createImovelDTO.qtdQuartos());
-            imovel.setQtdBanheiro(createImovelDTO.qtdBanheiro());
-            imovel.setQtdVagasGaragem(createImovelDTO.qtdVagasGaragem());
-            imovel.setDataAquisicao(createImovelDTO.dataAquisicao());
-            imovel.setRegistroCartorio(createImovelDTO.registroCartorio());
-            imovel.setInscricaoIptu(createImovelDTO.inscricaoIptu());
-            imovel.setInscricaoCaesb(createImovelDTO.inscricaoCaesb());
-            imovel.setInscricaoNeoenergia(createImovelDTO.inscricaoNeoenergia());
-            imovel.setValorVenal(createImovelDTO.valorVenal());
+        var imovel = imovelService.save(createImovelDTO);
 
-        } catch (Exception e){
-            e.printStackTrace();
-            ResponseEntity.badRequest().body(e.getMessage());
+        if(imovel == null) {
+            return ResponseEntity.badRequest().body("Erro ao cadastrar um imovel");
         }
+
+        return ResponseEntity.ok(imovel);
+    }
+
+    @DeleteMapping
+    public ResponseEntity deleteImovel(@RequestBody String cep) {
+        imovelService.delete(cep);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Imovel>> findAll(@RequestBody String email) {
+        return ResponseEntity.ok(imovelService.findAllByEmail(email));
     }
 }

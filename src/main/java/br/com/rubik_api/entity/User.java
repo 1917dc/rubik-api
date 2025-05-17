@@ -1,10 +1,9 @@
 package br.com.rubik_api.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import br.com.rubik_api.entity.imovel.Imovel;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class User {
@@ -22,13 +21,10 @@ public class User {
 	@Column(name = "senha")
 	private String senha;
 
-	public User() {	}
-	
-	public User(String email, String nome, String senha) {
-		this.email = email;
-		this.nome = nome;
-		this.senha = senha;
-	}
+	@Column
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "professor_id")
+	private List<Imovel> imoveis;
 
 	public Long getId() {
 		return id;
@@ -53,12 +49,20 @@ public class User {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
 	public String getSenha() {
 		return senha;
 	}
-	
+
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public List<Imovel> getImoveis() {
+		return imoveis;
+	}
+
+	public void setImoveis(List<Imovel> imoveis) {
+		this.imoveis = imoveis;
 	}
 }
