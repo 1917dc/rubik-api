@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface ImovelRepository extends JpaRepository<Imovel, Long> {
     Optional<Imovel> findImovelByCep(String cep);
-    Optional<List<Imovel>> findImovelByEmail(String email);
+    Optional<List<Imovel>> findByUser_Email(String email);
 }

@@ -3,6 +3,7 @@ package br.com.rubik_api.controller;
 import java.time.Instant;
 import java.util.Collections;
 
+import br.com.rubik_api.entity.imovel.Imovel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

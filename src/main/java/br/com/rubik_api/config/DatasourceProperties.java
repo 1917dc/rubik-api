@@ -32,8 +32,8 @@ public class DatasourceProperties {
 	Environment env;
 
 	@Primary
-	@Bean(name = "dataSourceLoginBase")
-	@ConfigurationProperties(prefix = "login-base.spring.datasource")
+	@Bean(name = "dataSourceRubik")
+	@ConfigurationProperties(prefix = "rubik-api.spring.datasource")
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setUrl(env.getProperty("spring.datasource.url"));
@@ -45,11 +45,11 @@ public class DatasourceProperties {
 	@Primary
 	@Bean(name = "entityManagerFactory")
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder,
-			@Qualifier("dataSourceLoginBase") DataSource dataSource) {
+			@Qualifier("dataSourceRubik") DataSource dataSource) {
 		Map<String, Object> properties = new HashMap<String, Object>();
 		properties.put("hibernate.hbm2ddl.auto", env.getProperty("spring.jpa.hibernate.ddl-auto"));
 		properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-		return builder.dataSource(dataSource).packages("br.com.login_base.entity").persistenceUnit("loginBaseDS")
+		return builder.dataSource(dataSource).packages("br.com.rubik_api.entity").persistenceUnit("rubikDS")
 				.properties(properties).build();
 	}
 
