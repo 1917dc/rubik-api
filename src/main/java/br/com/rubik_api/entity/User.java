@@ -23,7 +23,7 @@ public class User {
 
 	@Column
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "professor_id")
+	@JoinColumn(name = "user_id")
 	private List<Imovel> imoveis;
 
 	public Long getId() {
