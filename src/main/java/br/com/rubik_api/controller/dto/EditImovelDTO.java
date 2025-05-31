@@ -3,7 +3,6 @@ package br.com.rubik_api.controller.dto;
 import java.util.Date;
 
 public record EditImovelDTO(
-        String cep,
         String endereco,
         String cidade,
         String estado,

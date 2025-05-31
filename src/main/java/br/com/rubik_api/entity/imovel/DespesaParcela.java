@@ -14,7 +14,7 @@ public class DespesaParcela {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "despesa_id")
     private ImovelDespesa despesa;
     @Column(nullable = false)
@@ -23,9 +23,24 @@ public class DespesaParcela {
     private float valorParcela;
     @Column(nullable = false)
     private Date vencimentoParcela;
-    private enum Status {
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    public enum Status {
         PENDENTE,
-        PAGO,
+        PAGO
+    }
+
+    public DespesaParcela() {
+    }
+
+    public DespesaParcela(ImovelDespesa despesa, int numeroParcela, float valorParcela, Date vencimentoParcela, Status status) {
+        this.despesa = despesa;
+        this.numeroParcela = numeroParcela;
+        this.valorParcela = valorParcela;
+        this.vencimentoParcela = vencimentoParcela;
+        this.status = status;
     }
 
     public UUID getId() {
@@ -66,5 +81,13 @@ public class DespesaParcela {
 
     public void setVencimentoParcela(Date vencimentoParcela) {
         this.vencimentoParcela = vencimentoParcela;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
