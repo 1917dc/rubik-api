@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ImovelService {
@@ -24,13 +23,13 @@ public class ImovelService {
     private UserRepository userRepository;
 
     public Imovel findImovelByCep(String cep) {
-        return imovelRepository.findImovelByCep(cep).orElseThrow(() -> new ImovelNotFoundException());
+        return imovelRepository.findImovelByCep(cep)
+                .orElseThrow(ImovelNotFoundException::new);
     }
 
     public List<Imovel> findAllByEmail(String email) {
-        User user = userRepository.findByEmail(email).
-                orElseThrow(() -> new EntityNotFoundException("Professor nao encontrado"));
-
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Professor nao encontrado"));
         return user.getImoveis();
     }
 
@@ -66,8 +65,8 @@ public class ImovelService {
         imovelRepository.delete(imovel);
     }
 
-    public void update(EditImovelDTO editImovelDTO) {
-        var imovel = imovelRepository.findImovelByCep(editImovelDTO.cep())
+    public void update(String cep, EditImovelDTO editImovelDTO) {
+        var imovel = imovelRepository.findImovelByCep(cep)
                 .orElseThrow(() -> new ImovelNotFoundException());
 
         imovel.setEndereco(editImovelDTO.endereco());

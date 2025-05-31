@@ -53,16 +53,16 @@ public class ImovelController {
         return ResponseEntity.ok(imovel);
     }
 
-    @PutMapping
-    public ResponseEntity<Object> updateImovel(@RequestBody EditImovelDTO editImovelDTO) {
+    @PutMapping("/{cep}")
+    public ResponseEntity<Object> updateImovel(@PathVariable String cep, @RequestBody EditImovelDTO editImovelDTO) {
         // caso o usuario nao cadastre o cep correto ele tera de cadastrar novamente o imovel
-        Imovel imovel = imovelService.findImovelByCep(editImovelDTO.cep());
+        Imovel imovel = imovelService.findImovelByCep(cep);
 
         if (imovel == null) {
             return ResponseEntity.badRequest().body("Imovel não encontrado");
         }
 
-        imovelService.update(editImovelDTO);
+        imovelService.update(cep, editImovelDTO);
         return ResponseEntity.ok().body("Imóvel atualizado com sucesso");
     }
 }
