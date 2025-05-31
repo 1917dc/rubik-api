@@ -73,7 +73,6 @@ public class ImovelService {
         imovel.setEndereco(editImovelDTO.endereco());
         imovel.setCidade(editImovelDTO.cidade());
         imovel.setEstado(editImovelDTO.estado());
-        imovel.setCep(editImovelDTO.cep());
         imovel.setTipo(editImovelDTO.tipo());
         imovel.setQtdQuartos(editImovelDTO.qtdQuartos());
         imovel.setQtdBanheiro(editImovelDTO.qtdBanheiro());
