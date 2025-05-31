@@ -1,0 +1,32 @@
+name: rubik_api
+services:
+  mysql:
+    image: mysql:8.0.33
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    environment:
+      - MYSQL_DATABASE=rubik_api
+      - MYSQL_ROOT_PASSWORD=123
+    networks:
+      - rubik_network
+
+  rubik-api:
+    container_name: rubik_api
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/rubik_api?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123
+      SPRING_JPA_HIBERNATE_DDL_AUTO: drop-and-create
+    networks:
+      - rubik_network
+
+networks:
+  rubik_network:
+    driver: bridge

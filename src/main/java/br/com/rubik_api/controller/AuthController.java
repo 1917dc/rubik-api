@@ -3,7 +3,6 @@ package br.com.rubik_api.controller;
 import java.time.Instant;
 import java.util.Collections;
 
-import br.com.rubik_api.entity.imovel.Imovel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +36,7 @@ public class AuthController {
 
 	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody LoginDTO loginDTO) {
-		var user = userService.findByUsername(loginDTO.email());
+		var user = userService.findByEmail(loginDTO.email());
 
 	    if (passwordEncoder.matches(loginDTO.senha(), user.getSenha())) {
 	        return ResponseEntity.ok(Collections.singletonMap("token", gerarAccessToken(user)));

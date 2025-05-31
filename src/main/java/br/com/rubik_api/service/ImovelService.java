@@ -1,6 +1,7 @@
 package br.com.rubik_api.service;
 
 import br.com.rubik_api.controller.dto.CreateImovelDTO;
+import br.com.rubik_api.controller.dto.EditImovelDTO;
 import br.com.rubik_api.entity.User;
 import br.com.rubik_api.entity.imovel.Imovel;
 import br.com.rubik_api.repository.ImovelRepository;
@@ -63,5 +64,27 @@ public class ImovelService {
                 .orElseThrow(() -> new ImovelNotFoundException());
 
         imovelRepository.delete(imovel);
+    }
+
+    public void update(EditImovelDTO editImovelDTO) {
+        var imovel = imovelRepository.findImovelByCep(editImovelDTO.cep())
+                .orElseThrow(() -> new ImovelNotFoundException());
+
+        imovel.setEndereco(editImovelDTO.endereco());
+        imovel.setCidade(editImovelDTO.cidade());
+        imovel.setEstado(editImovelDTO.estado());
+        imovel.setCep(editImovelDTO.cep());
+        imovel.setTipo(editImovelDTO.tipo());
+        imovel.setQtdQuartos(editImovelDTO.qtdQuartos());
+        imovel.setQtdBanheiro(editImovelDTO.qtdBanheiro());
+        imovel.setQtdVagasGaragem(editImovelDTO.qtdVagasGaragem());
+        imovel.setDataAquisicao(editImovelDTO.dataAquisicao());
+        imovel.setRegistroCartorio(editImovelDTO.registroCartorio());
+        imovel.setInscricaoIptu(editImovelDTO.inscricaoIptu());
+        imovel.setInscricaoCaesb(editImovelDTO.inscricaoCaesb());
+        imovel.setInscricaoNeoenergia(editImovelDTO.inscricaoNeoenergia());
+        imovel.setValorVenal(editImovelDTO.valorVenal());
+
+        imovelRepository.save(imovel);
     }
 }

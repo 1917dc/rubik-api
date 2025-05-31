@@ -13,16 +13,18 @@ public class ImovelDespesa {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     // join column para reforcar atributos no banco de dados
-    @OneToOne
-    @JoinColumn(name = "imovel_id", unique = true, nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "imovel_id", nullable = false)
     private Imovel imovel;
     private String tipo;
     private float valor;
     private Date vencimento;
-    private enum status {
+    @Enumerated(EnumType.STRING)
+    private Status status;
+    public enum Status {
         PENDENTE,
-        PAGO,
-    };
+        PAGO
+    }
 
     public UUID getId() {
         return id;
