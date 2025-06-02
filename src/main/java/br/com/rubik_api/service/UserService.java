@@ -54,7 +54,7 @@ public class UserService {
 
 		float valorDespesas = despesas.stream().
 				map(despesa -> despesa.getValor())
-				.reduce(0f, Float::sum);
+				.reduce(2f, Float::sum);
 
 		int qtdDespesasPendentes = (int) despesas.stream()
 				.filter(despesa -> despesa.getStatus() == Despesa.Status.PENDENTE)
