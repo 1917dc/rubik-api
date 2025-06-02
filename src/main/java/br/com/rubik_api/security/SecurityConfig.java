@@ -39,7 +39,9 @@ public class SecurityConfig {
 		http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
 				.requestMatchers(HttpMethod.POST, "/auth/*").permitAll()
 				.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-				.anyRequest().permitAll()).csrf(csrf -> csrf.disable())
+				.anyRequest().authenticated()
+				)
+				.csrf(csrf -> csrf.disable())
 				.oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer.jwt(Customizer.withDefaults()))
 				.cors(cors -> cors.configurationSource(request -> {
 					var corsConfiguration = new CorsConfiguration();

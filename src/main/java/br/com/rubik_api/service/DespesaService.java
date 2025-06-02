@@ -1,14 +1,12 @@
 package br.com.rubik_api.service;
 
-import br.com.rubik_api.controller.dto.CreateImovelDespesaDTO;
-import br.com.rubik_api.entity.imovel.DespesaParcela;
-import br.com.rubik_api.entity.imovel.ImovelDespesa;
-import br.com.rubik_api.repository.DespesaParcelaRepository;
-import br.com.rubik_api.repository.ImovelDespesaRepository;
+import br.com.rubik_api.controller.dto.CreateDespesaDTO;
+import br.com.rubik_api.entity.Despesa;
+import br.com.rubik_api.repository.DespesaRepository;
 import br.com.rubik_api.repository.ImovelRepository;
+import br.com.rubik_api.repository.UserRepository;
 import br.com.rubik_api.service.exception.DespesaNotFoundException;
 import br.com.rubik_api.service.exception.ImovelNotFoundException;
-import br.com.rubik_api.service.exception.ParcelaNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,35 +17,43 @@ import java.util.UUID;
 public class DespesaService {
 
     @Autowired
-    private ImovelDespesaRepository imovelDespesaRepository;
-
-    @Autowired
-    private DespesaParcelaRepository despesaParcelaRepository;
+    private DespesaRepository despesaRepository;
 
     @Autowired
     private ImovelRepository imovelRepository;
 
-    public List<ImovelDespesa> getDespesasByImovelCep(String cep) {
-        return imovelDespesaRepository.findByImovel_Cep(cep)
-                .orElseThrow(() -> new DespesaNotFoundException(cep));
+    @Autowired
+    private UserRepository userRepository;
+
+    public List<Despesa> getDespesasByImovelCep(String cep) {
+        return despesaRepository.findByImovel_Cep(cep)
+                .orElseThrow(() -> new DespesaNotFoundException());
     }
 
-    public List<DespesaParcela> getParcelasByDespesa(UUID despesaId) {
-        return despesaParcelaRepository.findByDespesa_Id(despesaId)
-                .orElseThrow(ParcelaNotFoundException::new);
+    public int getParcelasByDespesa(UUID despesaId) {
+        return despesaRepository.findById(despesaId)
+                .orElseThrow(() -> new DespesaNotFoundException())
+                .getParcelas();
     }
 
-    public ImovelDespesa save(CreateImovelDespesaDTO createImovelDespesaDTO) {
-        var imovel = imovelRepository.findImovelByCep(createImovelDespesaDTO.imovelCep())
+    public Despesa save(String cep, CreateDespesaDTO createDespesaDTO) {
+        var imovel = imovelRepository.findImovelByCep(cep)
                 .orElseThrow(() -> new ImovelNotFoundException());
 
-        var despesa = new ImovelDespesa();
-        despesa.setImovel(imovel);
-        despesa.setTipo(createImovelDespesaDTO.tipo());
-        despesa.setValor(createImovelDespesaDTO.valor());
-        despesa.setVencimento(java.sql.Date.valueOf(createImovelDespesaDTO.vencimento()));
-        despesa.setStatus(ImovelDespesa.Status.valueOf(createImovelDespesaDTO.status().toUpperCase()));
+        var despesa = new Despesa();
 
-        return imovelDespesaRepository.save(despesa);
+        despesa.setImovel(imovel);
+        despesa.setTipo(createDespesaDTO.tipo());
+        despesa.setValor(createDespesaDTO.valor());
+        despesa.setVencimento(createDespesaDTO.vencimento());
+        despesa.setParcelas(createDespesaDTO.parcelas());
+        despesa.setStatus(Despesa.Status.valueOf(createDespesaDTO.status().toUpperCase()));
+
+        return despesaRepository.save(despesa);
+    }
+
+    public List<Despesa> getUserDespesas(String email) {
+        return despesaRepository.findByImovel_User_Email(email)
+                .orElseThrow(() -> new DespesaNotFoundException());
     }
 }

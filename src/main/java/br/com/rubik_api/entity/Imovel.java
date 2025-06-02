@@ -1,13 +1,11 @@
-package br.com.rubik_api.entity.imovel;
+package br.com.rubik_api.entity;
 
-import br.com.rubik_api.entity.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import br.com.rubik_api.entity.imovel.ImovelDespesa;
 
 @Entity
 @Table(name = "tb_imoveis")
@@ -22,7 +20,7 @@ public class Imovel {
     private User user;
 
     @OneToMany(mappedBy = "imovel")
-    private List<ImovelDespesa> despesas;
+    private List<Despesa> despesas;
 
     @Column(unique = true, nullable = false)
     private String endereco;

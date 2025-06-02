@@ -1,15 +1,14 @@
-package br.com.rubik_api.entity.imovel;
+package br.com.rubik_api.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
 @Table(name = "tb_despesa_imovel")
-public class ImovelDespesa {
+public class Despesa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -19,25 +18,26 @@ public class ImovelDespesa {
     @JoinColumn(name = "imovel_id", nullable = false)
     @JsonBackReference
     private Imovel imovel;
+    @Column(nullable = false)
     private String tipo;
+    @Column(nullable = false)
     private float valor;
-    private Date vencimento;
-
-    @OneToMany(mappedBy = "despesa")
-    private List<DespesaParcela> parcelas;
-
+    @Column(nullable = false)
+    private LocalDate vencimento;
+    @Column(nullable = true)
+    private int parcelas;
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Status status;
     public enum Status {
         PENDENTE,
         PAGO
     }
 
-
-    public ImovelDespesa() {
+    public Despesa() {
     }
 
-    public ImovelDespesa(Imovel imovel, String tipo, float valor, Date vencimento, List<DespesaParcela> parcelas, Status status) {
+    public Despesa(Imovel imovel, String tipo, float valor, LocalDate vencimento, int parcelas, Status status) {
         this.imovel = imovel;
         this.tipo = tipo;
         this.valor = valor;
@@ -78,19 +78,19 @@ public class ImovelDespesa {
         this.valor = valor;
     }
 
-    public Date getVencimento() {
+    public LocalDate getVencimento() {
         return vencimento;
     }
 
-    public void setVencimento(Date vencimento) {
+    public void setVencimento(LocalDate vencimento) {
         this.vencimento = vencimento;
     }
 
-    public List<DespesaParcela> getParcelas() {
+    public int getParcelas() {
         return parcelas;
     }
 
-    public void setParcelas(List<DespesaParcela> parcelas) {
+    public void setParcelas(int parcelas) {
         this.parcelas = parcelas;
     }
 

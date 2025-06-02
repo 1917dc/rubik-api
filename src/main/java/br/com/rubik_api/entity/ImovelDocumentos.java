@@ -1,4 +1,4 @@
-package br.com.rubik_api.entity.imovel;
+package br.com.rubik_api.entity;
 
 import jakarta.persistence.*;
 

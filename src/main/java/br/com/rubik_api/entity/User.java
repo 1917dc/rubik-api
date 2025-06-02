@@ -2,7 +2,6 @@ package br.com.rubik_api.entity;
 
 import jakarta.persistence.*;
 import java.util.List;
-import br.com.rubik_api.entity.imovel.Imovel;
 
 @Entity
 @Table(name = "tb_users")

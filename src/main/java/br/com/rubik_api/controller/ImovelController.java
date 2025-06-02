@@ -2,13 +2,13 @@ package br.com.rubik_api.controller;
 
 import br.com.rubik_api.controller.dto.CreateImovelDTO;
 import br.com.rubik_api.controller.dto.EditImovelDTO;
-import br.com.rubik_api.entity.imovel.Imovel;
+import br.com.rubik_api.entity.Imovel;
 import br.com.rubik_api.service.ImovelService;
-import br.com.rubik_api.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,12 +21,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/imovel")
 @Tag(name = "Imóvel", description = "Operações relacionadas a imóveis")
+@SecurityRequirement(name = "bearerAuth")
 public class ImovelController {
 
     @Autowired
     private ImovelService imovelService;
-    @Autowired
-    UserService userService;
 
     @Operation(summary = "Cadastrar imóvel", description = "Cadastra um novo imóvel com as informações fornecidas")
     @ApiResponses(value = {
@@ -67,13 +66,13 @@ public class ImovelController {
             @ApiResponse(responseCode = "200", description = "Lista de imóveis retornada com sucesso", content = @Content(schema = @Schema(implementation = Imovel.class))),
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
-    @GetMapping
+    @GetMapping("/user/{email}")
     public ResponseEntity<List<Imovel>> findAll(
-            @RequestBody @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            @RequestParam @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "E-mail do usuário",
                     required = true,
                     content = @Content(schema = @Schema(implementation = String.class))
-            ) String email) {
+            ) @PathVariable String email) {
         return ResponseEntity.ok(imovelService.findAllByEmail(email));
     }
 
