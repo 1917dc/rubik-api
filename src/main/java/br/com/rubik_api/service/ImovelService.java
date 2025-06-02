@@ -3,7 +3,7 @@ package br.com.rubik_api.service;
 import br.com.rubik_api.controller.dto.CreateImovelDTO;
 import br.com.rubik_api.controller.dto.EditImovelDTO;
 import br.com.rubik_api.entity.User;
-import br.com.rubik_api.entity.imovel.Imovel;
+import br.com.rubik_api.entity.Imovel;
 import br.com.rubik_api.repository.ImovelRepository;
 import br.com.rubik_api.repository.UserRepository;
 import br.com.rubik_api.service.exception.ImovelAlreadyExists;
